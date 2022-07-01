@@ -136,19 +136,19 @@ def predict_stroke_parameters():
     predictions = [
         model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
                            residence_type, smoking_status, age]]),
-        model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+        model_et.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
                            residence_type, smoking_status, age]]),
-        model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+        model_gbc.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
                            residence_type, smoking_status, age]]),
-        model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+        model_gnb.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
                            residence_type, smoking_status, age]]),
-        model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+        model_knn.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
                            residence_type, smoking_status, age]]),
-        model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+        model_rf.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
                            residence_type, smoking_status, age]])]
 
     predictions_concat = np.concatenate(predictions)
-
+    print(predictions_concat)
     result = model_xgb.predict([predictions_concat])
 
     return str(result[0])
