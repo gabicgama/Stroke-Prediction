@@ -134,21 +134,26 @@ def predict_stroke_parameters():
     smoking_status = request.args.get("condicao_fumante")
 
     predictions = [
-        model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_et.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_gbc.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_gnb.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_knn.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_rf.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]])]
+        model_ab.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_et.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_gbc.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_gnb.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_knn.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_rf.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])])]
 
     predictions_concat = np.concatenate(predictions)
-    print(predictions_concat)
     result = model_xgb.predict([predictions_concat])
 
     return str(result[0])
