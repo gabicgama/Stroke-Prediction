@@ -26,40 +26,40 @@ swagger_config = {
 }
 
 template = {
-  "swagger": "2.0",
-  "info": {
-    "title": "Predição de AVC",
-    "description": "API desenvolvida por Gabriela Campos Gama para o trabalho de conclusão do curso de Engenharia da Computaçao - CEFET/MG",
-    "contact": {
-      "responsibleOrganization": "ME",
-      "responsibleDeveloper": "Me",
-      "email": "camposgamagabriela@gmail.com",
-    },
-    "termsOfService": "http://me.com/terms",
-    "version": "0.0.1"
-  }
+    "swagger": "2.0",
+    "info": {
+        "title": "Predição de AVC",
+        "description": "API desenvolvida por Gabriela Campos Gama para o trabalho de conclusão do curso de Engenharia da Computaçao - CEFET/MG",
+        "contact": {
+            "responsibleOrganization": "ME",
+            "responsibleDeveloper": "Me",
+            "email": "camposgamagabriela@gmail.com",
+        },
+        "termsOfService": "http://me.com/terms",
+        "version": "0.0.1"
+    }
 }
 
 Swagger(app, config=swagger_config, template=template)
-#Adaboost
+# Adaboost
 pickle_in = open('models/model_ab.pkl', 'rb')
 model_ab = pickle.load(pickle_in)
-#Extra Trees
+# Extra Trees
 pickle_in = open('models/model_et.pkl', 'rb')
 model_et = pickle.load(pickle_in)
-#Gradient Boosting
+# Gradient Boosting
 pickle_in = open('models/model_gbc.pkl', 'rb')
 model_gbc = pickle.load(pickle_in)
-#GaussinNB
+# GaussinNB
 pickle_in = open('models/model_gnb.pkl', 'rb')
 model_gnb = pickle.load(pickle_in)
-#KNN
+# KNN
 pickle_in = open('models/model_knn.pkl', 'rb')
 model_knn = pickle.load(pickle_in)
-#Random Forest
+# Random Forest
 pickle_in = open('models/model_rf.pkl', 'rb')
 model_rf = pickle.load(pickle_in)
-#XGBoost
+# XGBoost
 pickle_in = open('models/model_xgb.pkl', 'rb')
 model_xgb = pickle.load(pickle_in)
 
@@ -133,18 +133,24 @@ def predict_stroke_parameters():
     smoking_status = request.args.get("condicao_fumante")
 
     predictions = [
-        model_ab.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_et.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_gbc.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_gnb.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_knn.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]]),
-        model_rf.predict([[hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
-                           residence_type, smoking_status, age]])]
+        model_ab.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_et.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_gbc.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_gnb.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_knn.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])]),
+        model_rf.predict(
+            [pd.to_numeric([hypertension, heart_disease, avg_glucose_level, bmi, gender, ever_married, work_type,
+                            residence_type, smoking_status, age])])]
 
     predictions_concat = np.concatenate(predictions)
     print(predictions_concat)
